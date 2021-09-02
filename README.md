@@ -1,2 +1,2 @@
-# Экпорт данных из www.drivernotes.net
+# Экспорт данных из www.drivernotes.net
 Умеет парсить страницы из журнала и сохранять данные в json и csv формате для Drivvo.
