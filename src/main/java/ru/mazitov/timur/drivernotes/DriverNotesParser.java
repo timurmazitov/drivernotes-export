@@ -78,24 +78,28 @@ public class DriverNotesParser {
 
 	private void exportCar(String url, String name) {
 		Car car = new Car();
-		car.setName(name);
+		String[] nameParts = name.split(" ");
+		car.setName(nameParts[1]);
+		car.setBrand(nameParts[0]);
+		car.setModel(nameParts[1]);
 		this.cars.add(car);
 
 		try {
 			Elements actions;
-			int page = 1;
-			do {
-//			for (int page = 1; page < 2; page++) {
+//			int page = 1;
+//			do {
+			for (int page = 1; page < 2; page++) {
 				String actionsUrl = url + "/actions?order=date-desc&count=10&page=" + page;
-				System.out.println("Exporting data for car: " + actionsUrl);
+				log.info("Exporting data for car: {}", actionsUrl);
 				Document carDoc = Jsoup.connect(actionsUrl).get();
 				actions = carDoc.select("a[href*=/action-]");
+
 				for (Element element : actions) {
 					exportAction(car, element.attr("abs:href"));
 				}
-//			}
-				page++;
-			} while (!actions.isEmpty());
+			}
+//				page++;
+//			} while (!actions.isEmpty());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
